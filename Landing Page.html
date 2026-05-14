@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Haykozé — All-climate Protective Wearables</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="colors_and_type.css" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: #f1f1f3; font-family: var(--font-text); }
+
+    /* ---------- Header ---------- */
+    .header {
+      position: sticky; top: 0; z-index: 50;
+      background: #000; color: #fff;
+      height: 72px; padding: 0 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .header .logo { display:flex; align-items:center; gap: 10px; }
+    .header .logo img { width: 38px; height: 38px; filter: invert(1) brightness(2); }
+    .header .logo .name { font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: -0.2px; line-height: 1; }
+    .header .logo .name small { display:block; font-size: 11px; font-weight: 400; opacity: .7; letter-spacing: 0.3px; margin-top: 2px; }
+
+    .nav { display: flex; gap: 40px; align-items: center; }
+    .nav a {
+      color: #fff;
+      font-family: var(--font-text);
+      font-size: 16px;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 0;
+      transition: color 150ms ease;
+    }
+    .nav a:hover { color: #2997ff; }
+    .nav a.has-caret::after {
+      content: ""; width: 8px; height: 8px;
+      border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+      transform: rotate(45deg) translateY(-2px);
+    }
+
+    .header .right { display: flex; align-items: center; gap: 18px; }
+    .header .account {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: #fff;
+      transition: background 150ms ease;
+    }
+    .header .account:hover { background: rgba(255,255,255,0.2); }
+    .header .account svg { width: 20px; height: 20px; }
+    .header .store {
+      background: var(--color-primary);
+      color: #fff;
+      border: 0;
+      padding: 14px 28px;
+      font-family: var(--font-text);
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: transform 100ms ease, background 150ms ease;
+    }
+    .header .store:hover { background: #0071e3; }
+    .header .store:active { transform: scale(0.96); }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative;
+      min-height: calc(100vh - 72px);
+      background: linear-gradient(180deg, #f1f1f3 0%, #e7e8ec 100%);
+      padding: 0 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 32px;
+      overflow: hidden;
+    }
+
+    .hero-copy { padding-left: 48px; max-width: 560px; }
+    .hero .eyebrow {
+      color: var(--color-primary);
+      font-family: var(--font-text);
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+      margin: 0 0 16px;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: 88px;
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+      color: #1d1d1f;
+      margin: 0 0 20px;
+    }
+    .hero .sub {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.3px;
+      color: #1d1d1f;
+      margin: 0 0 48px;
+    }
+    .hero .ctas { display: flex; gap: 16px; }
+    .hero .btn {
+      background: #1d1d1f;
+      color: #fff;
+      border: 0;
+      padding: 18px 56px;
+      font-family: var(--font-text);
+      font-size: 17px;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: transform 100ms ease, background 150ms ease;
+      min-width: 200px;
+    }
+    .hero .btn:hover { background: #000; }
+    .hero .btn:active { transform: scale(0.97); }
+
+    .hero-photo {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 0;
+    }
+    .hero-photo img {
+      max-width: 100%;
+      max-height: 80vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(rgba(0, 0, 0, 0.22) 3px 5px 30px);
+    }
+
+    /* ---------- Pagination dots ---------- */
+    .dots {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      z-index: 5;
+    }
+    .dots .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(29,29,31,0.25);
+      cursor: pointer;
+      transition: background 150ms ease, width 150ms ease;
+    }
+    .dots .dot.active {
+      width: 36px;
+      border-radius: 4px;
+      background: #1d1d1f;
+    }
+
+    /* ---------- Floating chat bubble ---------- */
+    .fab {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0,102,204,0.35);
+      z-index: 30;
+      border: 0;
+    }
+    .fab svg { width: 26px; height: 26px; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; padding: 32px; min-height: auto; }
+      .hero-copy { padding-left: 0; max-width: none; text-align: center; margin: 0 auto; }
+      .hero .ctas { justify-content: center; }
+      .hero h1 { font-size: 56px; letter-spacing: -1px; }
+      .hero .sub { font-size: 22px; }
+      .nav { display: none; }
+      .header { padding: 0 18px; height: 60px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <img src="assets/haykoze-logo.webp" alt="Haykozé" />
+      <div class="name">Haykozé<small>All-climate Wearables</small></div>
+    </div>
+
+    <nav class="nav">
+      <a>Home</a>
+      <a class="has-caret">Products</a>
+      <a class="has-caret">AR Technology</a>
+      <a class="has-caret">Explore</a>
+      <a class="has-caret">Support</a>
+    </nav>
+
+    <div class="right">
+      <div class="account" aria-label="Account">
+        <i data-lucide="user"></i>
+      </div>
+      <button class="store">Store</button>
+    </div>
+  </header>
+
+  <section class="hero" data-screen-label="Hero">
+    <div class="hero-copy">
+      <p class="eyebrow">New Product</p>
+      <h1>Haykozé AR49</h1>
+      <p class="sub">Cooling, engineered for the site.</p>
+      <div class="ctas">
+        <button class="btn">Buy now</button>
+        <button class="btn">Learn more</button>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <img src="assets/products/lineup.jpeg" alt="Haykozé AR49 — helmet and cap configurations" />
+    </div>
+
+    <div class="dots">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </section>
+
+  <button class="fab" aria-label="Chat">
+    <i data-lucide="message-circle"></i>
+  </button>
+
+  <script>
+    lucide.createIcons();
+
+    // Simple dot rotation
+    const dots = document.querySelectorAll(".dot");
+    let active = 2;
+    dots.forEach((d, i) => d.addEventListener("click", () => {
+      dots[active].classList.remove("active");
+      active = i;
+      dots[active].classList.add("active");
+    }));
+  </script>
+</body>
+</html>
